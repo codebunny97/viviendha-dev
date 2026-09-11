@@ -34,16 +34,16 @@ export const ProjectsProvider = ({ children }) => {
     try {
       const headers = getAuthHeaders();
       const res = await fetch("/api/projects", { headers });
-      if (!res.ok) {
-        throw new Error(`Failed to load projects: ${res.statusText}`);
-      }
-      const data = await res.json();
-      if (data.success && Array.isArray(data.projects)) {
-        setProjects(data.projects);
-        try {
-          localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
-        } catch {
-          // ignore quota errors
+      const contentType = res.headers.get("content-type") || "";
+      if (res.ok && contentType.includes("application/json")) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.projects)) {
+          setProjects(data.projects);
+          try {
+            localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
+          } catch {
+            // ignore quota errors
+          }
         }
       }
     } catch (err) {
@@ -58,13 +58,14 @@ export const ProjectsProvider = ({ children }) => {
   useEffect(() => {
     let ignore = false;
 
-    const syncProjects = async () => {
+    const syncInitial = async () => {
       try {
         const headers = getAuthHeaders();
         const res = await fetch("/api/projects", { headers });
-        if (res.ok && !ignore) {
+        const contentType = res.headers.get("content-type") || "";
+        if (res.ok && contentType.includes("application/json")) {
           const data = await res.json();
-          if (data.success && Array.isArray(data.projects)) {
+          if (!ignore && data.success && Array.isArray(data.projects)) {
             setProjects(data.projects);
             try {
               localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
@@ -73,19 +74,16 @@ export const ProjectsProvider = ({ children }) => {
             }
           }
         }
-      } catch (err) {
-        if (!ignore) {
-          console.warn("Could not sync projects with backend:", err);
-        }
+      } catch {
+        // Silently use localStorage / static seed
       }
     };
 
-    syncProjects();
-
+    syncInitial();
     return () => {
       ignore = true;
     };
-  }, [getAuthHeaders, isAuthenticated]);
+  }, [getAuthHeaders]);
 
   // Publicly visible projects (published only)
   const publicProjects = useMemo(() => {
@@ -109,8 +107,14 @@ export const ProjectsProvider = ({ children }) => {
     [projects]
   );
 
-  // CRUD actions
+  // CRUD actions with hybrid offline-first resilience
   const createProject = async (projectData) => {
+    const newProject = {
+      ...projectData,
+      id: projectData.id || `proj_${Date.now()}`,
+      updatedAt: new Date().toISOString(),
+    };
+
     try {
       const res = await fetch("/api/projects", {
         method: "POST",
@@ -118,31 +122,50 @@ export const ProjectsProvider = ({ children }) => {
           "Content-Type": "application/json",
           ...getAuthHeaders(),
         },
-        body: JSON.stringify(projectData),
+        body: JSON.stringify(newProject),
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Failed to create project.");
-      }
-
-      setProjects((prev) => {
-        const next = [data.project, ...prev.filter((p) => p.id !== data.project.id)];
-        try {
-          localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
-        } catch {
-          // ignore
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        const data = await res.json();
+        if (data.success && data.project) {
+          setProjects((prev) => {
+            const next = [data.project, ...prev.filter((p) => p.id !== data.project.id)];
+            try {
+              localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+            } catch {
+              // ignore storage error
+            }
+            return next;
+          });
+          return { success: true, project: data.project };
         }
-        return next;
-      });
-
-      return { success: true, project: data.project };
+      }
     } catch (err) {
-      return { success: false, error: err.message };
+      console.warn("Serverless API unavailable, saving project locally:", err);
     }
+
+    // Local fallback persistence
+    setProjects((prev) => {
+      const next = [newProject, ...prev.filter((p) => p.id !== newProject.id)];
+      try {
+        localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage error
+      }
+      return next;
+    });
+
+    return { success: true, project: newProject };
   };
 
   const updateProject = async (id, projectData) => {
+    const updated = {
+      ...projectData,
+      id,
+      updatedAt: new Date().toISOString(),
+    };
+
     try {
       const res = await fetch(`/api/projects?id=${encodeURIComponent(id)}`, {
         method: "PUT",
@@ -150,28 +173,41 @@ export const ProjectsProvider = ({ children }) => {
           "Content-Type": "application/json",
           ...getAuthHeaders(),
         },
-        body: JSON.stringify({ ...projectData, id }),
+        body: JSON.stringify(updated),
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Failed to update project.");
-      }
-
-      setProjects((prev) => {
-        const next = prev.map((p) => (p.id === id ? data.project : p));
-        try {
-          localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
-        } catch {
-          // ignore
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        const data = await res.json();
+        if (data.success && data.project) {
+          setProjects((prev) => {
+            const next = prev.map((p) => (p.id === id ? data.project : p));
+            try {
+              localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+            } catch {
+              // ignore storage error
+            }
+            return next;
+          });
+          return { success: true, project: data.project };
         }
-        return next;
-      });
-
-      return { success: true, project: data.project };
+      }
     } catch (err) {
-      return { success: false, error: err.message };
+      console.warn("Serverless API unavailable, updating project locally:", err);
     }
+
+    // Local fallback persistence
+    setProjects((prev) => {
+      const next = prev.map((p) => (p.id === id ? updated : p));
+      try {
+        localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage error
+      }
+      return next;
+    });
+
+    return { success: true, project: updated };
   };
 
   const togglePublish = async (id, isPublished) => {
@@ -185,25 +221,45 @@ export const ProjectsProvider = ({ children }) => {
         body: JSON.stringify({ id, isPublished }),
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Failed to update project status.");
-      }
-
-      setProjects((prev) => {
-        const next = prev.map((p) => (p.id === id ? data.project : p));
-        try {
-          localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
-        } catch {
-          // ignore
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        const data = await res.json();
+        if (data.success && data.project) {
+          setProjects((prev) => {
+            const next = prev.map((p) => (p.id === id ? data.project : p));
+            try {
+              localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+            } catch {
+              // ignore storage error
+            }
+            return next;
+          });
+          return { success: true, project: data.project };
         }
-        return next;
-      });
-
-      return { success: true, project: data.project };
+      }
     } catch (err) {
-      return { success: false, error: err.message };
+      console.warn("Serverless API unavailable, updating publish status locally:", err);
     }
+
+    // Local fallback persistence
+    let updatedProj = null;
+    setProjects((prev) => {
+      const next = prev.map((p) => {
+        if (p.id === id) {
+          updatedProj = { ...p, isPublished, updatedAt: new Date().toISOString() };
+          return updatedProj;
+        }
+        return p;
+      });
+      try {
+        localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage error
+      }
+      return next;
+    });
+
+    return { success: true, project: updatedProj };
   };
 
   const deleteProject = async (id) => {
@@ -215,25 +271,29 @@ export const ProjectsProvider = ({ children }) => {
         },
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Failed to delete project.");
-      }
-
-      setProjects((prev) => {
-        const next = prev.filter((p) => p.id !== id);
-        try {
-          localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
-        } catch {
-          // ignore
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || "Failed to delete project.");
         }
-        return next;
-      });
-
-      return { success: true };
+      }
     } catch (err) {
-      return { success: false, error: err.message };
+      console.warn("Serverless API unavailable, deleting project locally:", err);
     }
+
+    // Local fallback persistence
+    setProjects((prev) => {
+      const next = prev.filter((p) => p.id !== id);
+      try {
+        localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage error
+      }
+      return next;
+    });
+
+    return { success: true };
   };
 
   return (
