@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "src/data/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/auth/:action*",
@@ -11,3 +16,4 @@
     }
   ]
 }
+

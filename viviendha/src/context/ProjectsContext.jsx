@@ -38,11 +38,13 @@ export const ProjectsProvider = ({ children }) => {
       if (res.ok && contentType.includes("application/json")) {
         const data = await res.json();
         if (data.success && Array.isArray(data.projects)) {
-          setProjects(data.projects);
-          try {
-            localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
-          } catch {
-            // ignore quota errors
+          if (data.projects.length > 0) {
+            setProjects(data.projects);
+            try {
+              localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
+            } catch {
+              // ignore quota errors
+            }
           }
         }
       }
@@ -66,11 +68,13 @@ export const ProjectsProvider = ({ children }) => {
         if (res.ok && contentType.includes("application/json")) {
           const data = await res.json();
           if (!ignore && data.success && Array.isArray(data.projects)) {
-            setProjects(data.projects);
-            try {
-              localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
-            } catch {
-              // ignore
+            if (data.projects.length > 0) {
+              setProjects(data.projects);
+              try {
+                localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(data.projects));
+              } catch {
+                // ignore
+              }
             }
           }
         }

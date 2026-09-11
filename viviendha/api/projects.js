@@ -2,40 +2,78 @@
 // Vercel & Node compatible Serverless handler for Projects CRUD
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 import { verifyToken, extractToken } from "./auth.js";
 
-function getDbPath() {
-  // In dev / production node environments, resolve to src/data/projects-db.json
+const require = createRequire(import.meta.url);
+
+// Bundled canonical projects data (guaranteed to be bundled by Vercel/Node File Trace)
+let bundledProjects = [];
+try {
+  bundledProjects = require("../src/data/projects-db.json");
+} catch {
+  try {
+    bundledProjects = require("./projects-db.json");
+  } catch {
+    bundledProjects = [];
+  }
+}
+
+// In-memory runtime cache for serverless invocation lifecycle
+let memoryProjectsCache = Array.isArray(bundledProjects) ? [...bundledProjects] : [];
+
+function getLocalDbPath() {
   return path.join(process.cwd(), "src", "data", "projects-db.json");
 }
 
 function readProjects() {
+  const localPath = getLocalDbPath();
+
+  // 1. In local development, read directly from project filesystem if available
   try {
-    const dbPath = getDbPath();
-    if (fs.existsSync(dbPath)) {
-      const content = fs.readFileSync(dbPath, "utf-8");
-      return JSON.parse(content);
+    if (fs.existsSync(localPath)) {
+      const content = fs.readFileSync(localPath, "utf-8");
+      const parsed = JSON.parse(content);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
     }
   } catch (err) {
-    console.error("Error reading projects db:", err);
+    console.warn("Could not read local disk projects-db.json, falling back to bundled canonical data:", err);
   }
+
+  // 2. In serverless production (Vercel), return in-memory cache or bundled canonical project data
+  if (Array.isArray(memoryProjectsCache) && memoryProjectsCache.length > 0) {
+    return memoryProjectsCache;
+  }
+
+  if (Array.isArray(bundledProjects) && bundledProjects.length > 0) {
+    return bundledProjects;
+  }
+
   return [];
 }
 
 function writeProjects(projects) {
+  memoryProjectsCache = projects;
+  const localPath = getLocalDbPath();
+
+  // Local development persistence: write to project source file
   try {
-    const dbPath = getDbPath();
-    const dir = path.dirname(dbPath);
+    const dir = path.dirname(localPath);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(dbPath, JSON.stringify(projects, null, 2), "utf-8");
+    fs.writeFileSync(localPath, JSON.stringify(projects, null, 2), "utf-8");
     return true;
-  } catch (err) {
-    console.error("Error writing projects db:", err);
+  } catch {
+    // Expected on Vercel serverless (read-only container filesystem).
+    // Note: Serverless environments require a cloud database (e.g. Supabase, Postgres, MongoDB)
+    // for persistent multi-tenant writes across cold starts.
     return false;
   }
 }
+
 
 function slugify(text) {
   return text
