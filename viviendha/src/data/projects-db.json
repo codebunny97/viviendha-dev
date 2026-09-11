@@ -1,0 +1,405 @@
+[
+  {
+    "id": "viviendha-twins",
+    "slug": "viviendha-twins",
+    "title": "Viviendha Twins",
+    "subtitle": "Mukundha & Murari",
+    "tagline": "Symmetric Elegance & Harmonious Living in Bowrampet",
+    "category": "Twin Residential Towers",
+    "status": "Completed",
+    "badge": "Landmark Project",
+    "isPublished": true,
+    "location": "Bowrampet, Hyderabad, Telangana",
+    "coordinates": {
+      "lat": 17.5318209,
+      "lng": 78.3463257
+    },
+    "googleMapsUrl": "https://www.google.com/maps/place/Viviendha+Twins+-+Mukundha+%26+Murari/@17.5318209,78.3463257,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb8d006ea9e8a5:0x5b771ac932e578ab!8m2!3d17.5318209!4d78.3463257!16s%2Fg%2F11ycl4g1lp",
+    "reraNumber": "",
+    "possession": "Ready to Move (Handed Over)",
+    "totalUnits": "50+ Luxury Residences",
+    "configurations": [
+      "2 BHK",
+      "3 BHK"
+    ],
+    "areaRange": "1,240 - 1,880 sq.ft",
+    "pricing": "₹65 Lakhs - ₹98 Lakhs",
+    "heroImage": "/apartment.png",
+    "coverImage": "/hero.png",
+    "brochurePdf": "",
+    "projectPlanPdf": "",
+    "overview": "Viviendha Twins (Mukundha & Murari) represents our vision of balanced, community-centric living. Set in the tranquil yet rapidly emerging growth corridor of Bowrampet / Bachupally, these twin standalone residential towers offer meticulously planned 2 and 3 BHK homes. Designed with 100% Vastu compliance, exceptional cross-ventilation, and generous setbacks, every home is an enduring sanctuary for modern families.",
+    "keyHighlights": [
+      "Twin tower symmetry designed for maximum cross-ventilation and natural daylight",
+      "Prime location just minutes away from Outer Ring Road (ORR Exit 5) and Bachupally Junction",
+      "50+ happy families already residing with active homeowners community",
+      "G+5 RCC framed earthquake-resistant structure with premium elevations",
+      "100% Vastu-compliant layouts with zero common walls between select units",
+      "Comprehensive amenities including terrace recreation, gym, and landscaped spaces"
+    ],
+    "amenities": [
+      {
+        "name": "Terrace Sky Lounge",
+        "description": "Open-air landscaped deck with seating pavilions",
+        "icon": "Sun"
+      },
+      {
+        "name": "24/7 Monitored Security",
+        "description": "CCTV surveillance across all entry/exit points and lobbies",
+        "icon": "ShieldCheck"
+      },
+      {
+        "name": "100% Power Backup",
+        "description": "Generator power backup for elevators, common areas, and lights",
+        "icon": "Zap"
+      },
+      {
+        "name": "Dedicated Children's Play Zone",
+        "description": "Safe, cushioned outdoor play space with modern gear",
+        "icon": "Smile"
+      },
+      {
+        "name": "Modern Fitness Centre",
+        "description": "Equipped gymnasium with cardio and strength equipment",
+        "icon": "Dumbbell"
+      },
+      {
+        "name": "Rainwater Harvesting",
+        "description": "Eco-conscious percolation pits and recharge systems",
+        "icon": "Droplets"
+      },
+      {
+        "name": "High-Speed Elevators",
+        "description": "Branded 8-passenger automatic elevators with ARD safety",
+        "icon": "ArrowUpDown"
+      },
+      {
+        "name": "EV Charging Infrastructure",
+        "description": "Provisioned electric vehicle charging stations in parking bay",
+        "icon": "BatteryCharging"
+      }
+    ],
+    "specifications": [
+      {
+        "category": "Structure",
+        "details": "R.C.C framed structure designed to withstand wind and seismic loads (Zone II)."
+      },
+      {
+        "category": "Super Structure",
+        "details": "Red brick / CC brick masonry with smooth sponge-finished cement plastering."
+      },
+      {
+        "category": "Flooring",
+        "details": "800x800mm premium double charged vitrified tiles in living, dining, and bedrooms. Anti-skid ceramic tiles in balconies and utility areas."
+      },
+      {
+        "category": "Doors & Windows",
+        "details": "Teakwood frame with designer polished shutter for main door. UPVC sliding window systems with mosquito mesh provision and safety grills."
+      },
+      {
+        "category": "Kitchen",
+        "details": "Granite platform with stainless steel sink, 2-foot glazed ceramic tile dado above counter, and provisions for water purifier and chimney."
+      },
+      {
+        "category": "Toilets",
+        "details": "Branded sanitary ware (Kohler / Jaquar or equivalent), wall-mounted EWC with concealed flush tank, and hot & cold diverter."
+      },
+      {
+        "category": "Electrical",
+        "details": "Concealed copper wiring (Havells / Polycab) with modular switches, TV & telephone points in hall & master bedroom, AC points in all bedrooms."
+      }
+    ],
+    "gallery": [
+      {
+        "url": "/apartment.png",
+        "title": "Front Elevation & Architectural Perspective",
+        "category": "Exterior"
+      },
+      {
+        "url": "/hero.png",
+        "title": "Sunset Facade & Landscape Approach",
+        "category": "Exterior"
+      },
+      {
+        "url": "/apartment.png",
+        "title": "Modern Balcony & Natural Lighting",
+        "category": "Architecture"
+      },
+      {
+        "url": "/hero.png",
+        "title": "Community Entrance & Perimeter",
+        "category": "Grounds"
+      }
+    ],
+    "floorPlans": [
+      {
+        "type": "2 BHK Executive",
+        "superBuiltUp": "1,240 sq.ft",
+        "facing": "East / West",
+        "features": "2 Bedrooms, 2 Bathrooms, Spacious Living & Dining, Kitchen with Utility, Private Balcony",
+        "image": ""
+      },
+      {
+        "type": "3 BHK Premium",
+        "superBuiltUp": "1,680 sq.ft",
+        "facing": "East Facing",
+        "features": "3 Bedrooms, 3 Bathrooms, Large Foyer, Living, Dining, Puja Room, Kitchen, Utility, 2 Balconies",
+        "image": ""
+      },
+      {
+        "type": "3 BHK Grand",
+        "superBuiltUp": "1,880 sq.ft",
+        "facing": "North-East Corner",
+        "features": "3 Master Suites, 3 Bathrooms, Extended Balcony Deck, Corner Privacy, Dedicated Store Room",
+        "image": ""
+      }
+    ],
+    "constructionProgress": {
+      "percentage": 100,
+      "status": "Handover Completed",
+      "latestUpdate": "Fully completed with Occupancy Certificate (OC) received and families residing."
+    },
+    "faqs": [
+      {
+        "question": "Are home loans available for this project?",
+        "answer": "Yes, major nationalized and private banks including SBI, HDFC, ICICI, and Axis Bank have approved loan facilities."
+      }
+    ]
+  },
+  {
+    "id": "viviendha-serene-heights",
+    "slug": "viviendha-serene-heights",
+    "title": "Viviendha Serene Heights",
+    "subtitle": "High-Rise Luxury Residences",
+    "tagline": "Elevated Living Overlooking Hyderabad's Tech Horizon",
+    "category": "Luxury High-Rise",
+    "status": "Ongoing",
+    "badge": "Under Construction",
+    "isPublished": true,
+    "location": "Tellapur - Financial District Extension, Hyderabad",
+    "coordinates": {
+      "lat": 17.4852,
+      "lng": 78.2986
+    },
+    "googleMapsUrl": "https://maps.google.com/?q=Tellapur+Hyderabad",
+    "reraNumber": "",
+    "possession": "December 2026",
+    "totalUnits": "120 Exclusive Apartments",
+    "configurations": [
+      "3 BHK",
+      "4 BHK"
+    ],
+    "areaRange": "1,950 - 2,850 sq.ft",
+    "pricing": "Price on Request",
+    "heroImage": "/hero.png",
+    "coverImage": "/apartment.png",
+    "brochurePdf": "",
+    "projectPlanPdf": "",
+    "overview": "Viviendha Serene Heights is our upcoming flagship high-rise venture engineered for discerning professionals. Located at the intersection of serenity and connectivity, Serene Heights brings biophilic architecture, panoramic skyline views, double-height lobbies, and private sky decks together in an exclusive gated sanctuary.",
+    "keyHighlights": [
+      "Soaring 14-storey architectural tower with 360-degree green views",
+      "Only 4 apartments per floor with dedicated service and passenger lifts",
+      "Strategic 10-minute commute to Gachibowli, Neopolis, and Wipro Circle",
+      "Grand double-height entrance reception and visitor drop-off zone",
+      "Infinity pool on the rooftop level with integrated sun lounge",
+      "IGBC Pre-Certified Gold rating for energy efficiency and water conservation"
+    ],
+    "amenities": [
+      {
+        "name": "Rooftop Infinity Pool",
+        "description": "Heated infinity-edge pool with skyline view deck",
+        "icon": "Waves"
+      },
+      {
+        "name": "Executive Co-Working Pods",
+        "description": "High-speed WiFi enabled work and conference lounge",
+        "icon": "Laptop"
+      },
+      {
+        "name": "Clubhouse & Banquet Hall",
+        "description": "Indoor community events hall with banquet kitchen",
+        "icon": "Building"
+      },
+      {
+        "name": "Badminton & Squash Courts",
+        "description": "Indoor wooden-floored sports courts",
+        "icon": "Trophy"
+      },
+      {
+        "name": "Yoga & Meditation Pavilion",
+        "description": "Quiet open-air lawn pavilion surrounded by Zen greenery",
+        "icon": "Heart"
+      },
+      {
+        "name": "Automated Multi-Level Parking",
+        "description": "Designated vehicular circulation with license-plate recognition",
+        "icon": "Car"
+      }
+    ],
+    "specifications": [
+      {
+        "category": "Structure",
+        "details": "Mivan / Shear Wall Aluminum Formwork technology for seamless acoustic and thermal insulation."
+      },
+      {
+        "category": "Flooring",
+        "details": "Large format Italian glazed vitrified tiles in all primary zones, wooden finish flooring in master suite."
+      },
+      {
+        "category": "Home Automation",
+        "details": "Smart video door phone, digital door lock with biometric & passcode access, smart lighting pre-wiring."
+      },
+      {
+        "category": "Green Technology",
+        "details": "Solar panels powering 100% of common area consumption, organic waste converter on-site."
+      }
+    ],
+    "gallery": [
+      {
+        "url": "/hero.png",
+        "title": "Architectural High-Rise Render",
+        "category": "Exterior"
+      },
+      {
+        "url": "/apartment.png",
+        "title": "Evening Illumination Concept",
+        "category": "Exterior"
+      }
+    ],
+    "floorPlans": [
+      {
+        "type": "3 BHK Signature",
+        "superBuiltUp": "1,950 sq.ft",
+        "facing": "East",
+        "features": "3 Bedrooms, 3 Bathrooms, Powder Room, Expansive Living Room, Wide Balcony Deck",
+        "image": ""
+      },
+      {
+        "type": "4 BHK Royal Vista",
+        "superBuiltUp": "2,850 sq.ft",
+        "facing": "North-East",
+        "features": "4 Bedrooms, 4 Bathrooms, Servant Quarters, Family Lounge, Dual Panoramic Balconies",
+        "image": ""
+      }
+    ],
+    "constructionProgress": {
+      "percentage": 45,
+      "status": "Structure & Slab Casting",
+      "latestUpdate": "Tower superstructure completed up to 8th floor slab. Internal block work underway."
+    },
+    "faqs": [
+      {
+        "question": "What is the expected handover timeline?",
+        "answer": "Handover is scheduled for December 2026."
+      }
+    ]
+  },
+  {
+    "id": "viviendha-aura",
+    "slug": "viviendha-aura",
+    "title": "Viviendha Aura",
+    "subtitle": "Eco-Urban Gated Community",
+    "tagline": "Harmonizing Urban Convenience with Nature's Calm",
+    "category": "Boutique Residences",
+    "status": "Upcoming",
+    "badge": "Upcoming Launch",
+    "isPublished": true,
+    "location": "Kollur - ORR Growth Corridor, Hyderabad",
+    "coordinates": {
+      "lat": 17.5112,
+      "lng": 78.2614
+    },
+    "googleMapsUrl": "https://maps.google.com/?q=Kollur+Hyderabad",
+    "reraNumber": "",
+    "possession": "2027",
+    "totalUnits": "84 Boutique Units",
+    "configurations": [
+      "2.5 BHK",
+      "3 BHK"
+    ],
+    "areaRange": "1,450 - 2,100 sq.ft",
+    "pricing": "Early Bird Expressions Open",
+    "heroImage": "/apartment.png",
+    "coverImage": "/hero.png",
+    "brochurePdf": "",
+    "projectPlanPdf": "",
+    "overview": "Conceived as an eco-conscious boutique community, Viviendha Aura focuses on low-density living, lush open spaces, and sustainable materials. Designed for families who seek peace without sacrificing proximity to urban conveniences.",
+    "keyHighlights": [
+      "Low-density boutique layout with 70% open landscaped spaces",
+      "Immediate connectivity to ORR Exit 2 and international schools hub",
+      "Native tree plantation corridors and natural jogging loops",
+      "Biophilic architectural facades with lush vertical planters"
+    ],
+    "amenities": [
+      {
+        "name": "Central Amphitheatre",
+        "description": "Open-air lawn for community evenings and cultural performances",
+        "icon": "Music"
+      },
+      {
+        "name": "Herbal & Butterfly Garden",
+        "description": "Curated organic botanical gardens and sensory walkways",
+        "icon": "Flower"
+      },
+      {
+        "name": "Pet Park & Care Station",
+        "description": "Enclosed agility track and exercise area for pets",
+        "icon": "Dog"
+      },
+      {
+        "name": "EV Fast Chargers",
+        "description": "Dedicated rapid charging infrastructure for all residents",
+        "icon": "Zap"
+      }
+    ],
+    "specifications": [
+      {
+        "category": "Structure",
+        "details": "Robust earthquake-resistant RCC frame engineered to high seismic tolerances."
+      },
+      {
+        "category": "Water Supply",
+        "details": "Dual-piping water management system with centralized water softening and filtration plant."
+      }
+    ],
+    "gallery": [
+      {
+        "url": "/apartment.png",
+        "title": "Botanical Landscape & Facade Renders",
+        "category": "Concept"
+      },
+      {
+        "url": "/hero.png",
+        "title": "Courtyard & Community Zone",
+        "category": "Exterior"
+      }
+    ],
+    "floorPlans": [
+      {
+        "type": "2.5 BHK Eco Suite",
+        "superBuiltUp": "1,450 sq.ft",
+        "facing": "East",
+        "features": "2 Bedrooms + Study / Work Pod, 2 Bathrooms, Balcony, Open Concept Kitchen",
+        "image": ""
+      },
+      {
+        "type": "3 BHK Garden View",
+        "superBuiltUp": "1,980 sq.ft",
+        "facing": "North",
+        "features": "3 Bedrooms, 3 Bathrooms, Extended Balcony overlooking Central Garden",
+        "image": ""
+      }
+    ],
+    "constructionProgress": {
+      "percentage": 10,
+      "status": "Site Planning & Approvals",
+      "latestUpdate": "Architectural drawings and municipal filing submitted. Site grading started."
+    },
+    "faqs": [
+      {
+        "question": "When does booking open for Viviendha Aura?",
+        "answer": "Expressions of interest are currently open for pre-launch buyers."
+      }
+    ]
+  }
+]
