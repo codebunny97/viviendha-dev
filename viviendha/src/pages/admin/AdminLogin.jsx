@@ -104,7 +104,7 @@ const AdminLogin = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@viviendha.com"
+                    placeholder="admin@viviendhadevelopers.com"
                     className="block w-full pl-10 pr-3.5 py-3 rounded-xl border border-slate-300 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1E3A34] focus:border-transparent transition-all"
                   />
                 </div>

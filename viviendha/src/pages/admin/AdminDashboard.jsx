@@ -129,7 +129,7 @@ const AdminDashboard = () => {
                   Admin Console
                 </span>
                 <span className="text-xs text-slate-500 font-medium">
-                  {user?.email || "admin@viviendha.com"}
+                  {user?.email || "admin@viviendhadevelopers.com"}
                 </span>
               </div>
             </div>

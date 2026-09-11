@@ -84,7 +84,7 @@ export default async function handler(req, res) {
 
   // Dynamically load environment variables at request time
   const JWT_SECRET = process.env.ADMIN_JWT_SECRET;
-  const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "admin@viviendha.com").trim().toLowerCase();
+  const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "admin@viviendhadevelopers.com").trim().toLowerCase();
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
   const url = new URL(req.url, "http://localhost");
