@@ -47,12 +47,6 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      // If already a local authenticated session, validate immediately
-      if (token.startsWith("viviendha_session_") && user) {
-        setLoading(false);
-        return;
-      }
-
       try {
         const res = await fetch("/api/auth/verify", {
           method: "POST",
@@ -63,20 +57,27 @@ export const AuthProvider = ({ children }) => {
         });
 
         const contentType = res.headers.get("content-type") || "";
+        let data = null;
         if (contentType.includes("application/json")) {
-          const data = await res.json();
-          if (active) {
-            if (data.success && data.user) {
-              setUser(data.user);
-            } else {
-              setToken(null);
-              setUser(null);
-              clearStoredSession();
-            }
+          try {
+            data = await res.json();
+          } catch {
+            data = null;
+          }
+        }
+
+        if (active) {
+          if (res.ok && data?.success && data?.user) {
+            setUser(data.user);
+          } else {
+            // Token is expired, invalid, or server returned unauthorized
+            setToken(null);
+            setUser(null);
+            clearStoredSession();
           }
         }
       } catch (err) {
-        console.warn("Could not verify session with server, retaining local session:", err);
+        console.warn("Could not verify session with server:", err);
       } finally {
         if (active) {
           setLoading(false);
@@ -88,89 +89,77 @@ export const AuthProvider = ({ children }) => {
     return () => {
       active = false;
     };
-  }, [token, user]);
+  }, [token]);
 
   const login = async (email, password, remember = true) => {
     try {
-      let data = null;
-
-      // 1. Try serverless backend endpoint first
-      try {
-        const res = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
-
-        const contentType = res.headers.get("content-type") || "";
-        if (contentType.includes("application/json")) {
-          data = await res.json();
-          if (!res.ok || !data.success) {
-            throw new Error(data.message || "Invalid email or password.");
-          }
-        } else {
-          // If server returned non-JSON (e.g. 404 HTML on static host/preview)
-          console.warn("Auth endpoint returned non-JSON response, attempting fallback verification.");
-        }
-      } catch (fetchErr) {
-        // If it's an explicit invalid credential error from backend JSON, rethrow it
-        if (
-          fetchErr.message &&
-          !fetchErr.message.includes("Failed to fetch") &&
-          !fetchErr.message.includes("is not valid JSON") &&
-          !fetchErr.message.includes("Unexpected token")
-        ) {
-          throw fetchErr;
-        }
-        console.warn("Backend API unavailable, using fallback verification:", fetchErr);
-      }
-
-      // 2. If serverless backend returned valid session
-      if (data && data.success && data.user && data.token) {
-        setToken(data.token);
-        setUser(data.user);
-
-        const storage = remember ? localStorage : sessionStorage;
-        storage.setItem(STORAGE_KEY, data.token);
-        storage.setItem(USER_KEY, JSON.stringify(data.user));
-
-        return { success: true, user: data.user };
-      }
-
-      // 3. Fallback verification for static host / local preview / offline
       const cleanEmail = String(email || "").trim().toLowerCase();
-      if (
-        cleanEmail === "admin@viviendha.com" &&
-        password === "ViviendhaAdmin2026!"
-      ) {
-        const adminUser = {
-          email: "admin@viviendha.com",
-          role: "admin",
-          name: "Viviendha Administrator",
-        };
-        const localToken = `viviendha_session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-
-        setToken(localToken);
-        setUser(adminUser);
-
-        const storage = remember ? localStorage : sessionStorage;
-        storage.setItem(STORAGE_KEY, localToken);
-        storage.setItem(USER_KEY, JSON.stringify(adminUser));
-
-        return { success: true, user: adminUser };
+      if (!cleanEmail || !password) {
+        throw new Error("Email and password are required.");
       }
 
-      throw new Error("Invalid email or password.");
+      // Strictly authenticate through serverless backend endpoint
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail, password }),
+      });
+
+      // Defensive JSON response handling to prevent Unexpected Token errors
+      const contentType = res.headers.get("content-type") || "";
+      let data = null;
+      if (contentType.includes("application/json")) {
+        try {
+          data = await res.json();
+        } catch {
+          data = null;
+        }
+      }
+
+      if (!res.ok || !data?.success) {
+        const message =
+          data?.message ||
+          (res.status === 404
+            ? "Authentication endpoint not found (404). Please ensure backend deployment and routes are configured."
+            : res.status === 401
+            ? "Invalid admin email or password."
+            : res.status === 500
+            ? "Authentication service error. Please verify server environment variables."
+            : `Authentication failed (HTTP ${res.status}).`);
+        throw new Error(message);
+      }
+
+      if (!data.token || !data.user) {
+        throw new Error("Invalid response format received from authentication server.");
+      }
+
+      setToken(data.token);
+      setUser(data.user);
+
+      const storage = remember ? localStorage : sessionStorage;
+      storage.setItem(STORAGE_KEY, data.token);
+      storage.setItem(USER_KEY, JSON.stringify(data.user));
+
+      return { success: true, user: data.user };
     } catch (err) {
-      return { success: false, error: err.message };
+      return { success: false, error: err.message || "An unexpected error occurred during login." };
     }
   };
 
   const logout = useCallback(() => {
+    if (token) {
+      fetch("/api/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }).catch(() => {});
+    }
     setToken(null);
     setUser(null);
     clearStoredSession();
-  }, []);
+  }, [token]);
 
   const getAuthHeaders = useCallback(() => {
     if (!token) return {};

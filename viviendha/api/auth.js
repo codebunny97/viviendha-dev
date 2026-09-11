@@ -2,10 +2,6 @@
 // Vercel & Node compatible Serverless handler for secure Admin Authentication
 import crypto from "node:crypto";
 
-const JWT_SECRET = process.env.ADMIN_JWT_SECRET;
-const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "admin@viviendha.com").trim().toLowerCase();
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-
 // Helper to base64url encode
 function base64UrlEncode(str) {
   return Buffer.from(str)
@@ -24,30 +20,30 @@ function base64UrlDecode(str) {
 }
 
 // Generate secure signed token
-export function createToken(payload) {
-  if (!JWT_SECRET) {
+export function createToken(payload, secret = process.env.ADMIN_JWT_SECRET) {
+  if (!secret) {
     throw new Error("ADMIN_JWT_SECRET environment variable is not configured.");
   }
   const header = base64UrlEncode(JSON.stringify({ alg: "HS256", typ: "JWT" }));
   const exp = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 days validity
   const body = base64UrlEncode(JSON.stringify({ ...payload, exp }));
   const signature = crypto
-    .createHmac("sha256", JWT_SECRET)
+    .createHmac("sha256", secret)
     .update(`${header}.${body}`)
     .digest("base64url");
   return `${header}.${body}.${signature}`;
 }
 
 // Verify signed token
-export function verifyToken(token) {
-  if (!JWT_SECRET) return null;
+export function verifyToken(token, secret = process.env.ADMIN_JWT_SECRET) {
+  if (!secret) return null;
   if (!token || typeof token !== "string") return null;
   const parts = token.split(".");
   if (parts.length !== 3) return null;
 
   const [header, body, signature] = parts;
   const expectedSig = crypto
-    .createHmac("sha256", JWT_SECRET)
+    .createHmac("sha256", secret)
     .update(`${header}.${body}`)
     .digest("base64url");
 
@@ -79,18 +75,38 @@ export function extractToken(req) {
 export default async function handler(req, res) {
   res.setHeader("Content-Type", "application/json");
 
+  // Handle CORS preflight if called cross-origin
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    return res.status(200).end();
+  }
+
+  // Dynamically load environment variables at request time
+  const JWT_SECRET = process.env.ADMIN_JWT_SECRET;
+  const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "admin@viviendha.com").trim().toLowerCase();
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
   const url = new URL(req.url, "http://localhost");
   const pathParts = url.pathname.replace(/\/+$/, "").split("/");
   const lastPart = pathParts[pathParts.length - 1];
-  const queryAction = url.searchParams.get("action");
-  const body = req.body || {};
+  const queryAction = url.searchParams.get("action") || (req.query && req.query.action);
+
+  let body = req.body || {};
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      body = {};
+    }
+  }
 
   let effectiveAction = "login";
   if (["login", "verify", "logout"].includes(lastPart)) {
     effectiveAction = lastPart;
-  } else if (queryAction) {
+  } else if (queryAction && ["login", "verify", "logout"].includes(queryAction)) {
     effectiveAction = queryAction;
-  } else if (body.action) {
+  } else if (body.action && ["login", "verify", "logout"].includes(body.action)) {
     effectiveAction = body.action;
   }
 
@@ -116,11 +132,14 @@ export default async function handler(req, res) {
         email.trim().toLowerCase() === ADMIN_EMAIL &&
         password === ADMIN_PASSWORD
       ) {
-        const token = createToken({
-          email: ADMIN_EMAIL,
-          role: "admin",
-          name: "Viviendha Administrator",
-        });
+        const token = createToken(
+          {
+            email: ADMIN_EMAIL,
+            role: "admin",
+            name: "Viviendha Administrator",
+          },
+          JWT_SECRET
+        );
 
         return res.status(200).json({
           success: true,
@@ -142,7 +161,7 @@ export default async function handler(req, res) {
 
     if (effectiveAction === "verify") {
       const token = extractToken(req) || body.token;
-      const user = verifyToken(token);
+      const user = verifyToken(token, JWT_SECRET);
       if (!user) {
         return res.status(401).json({
           success: false,
@@ -168,3 +187,4 @@ export default async function handler(req, res) {
     message: `Method not allowed or unrecognized action '${effectiveAction}'.`,
   });
 }
+

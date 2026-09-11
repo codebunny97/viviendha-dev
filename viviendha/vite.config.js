@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -5,6 +7,8 @@ import authHandler from "./api/auth.js";
 import projectsHandler from "./api/projects.js";
 import uploadHandler from "./api/upload.js";
 import contactHandler from "./api/contact.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function createApiMiddleware() {
   return async (req, res, next) => {
@@ -85,7 +89,7 @@ function apiDevServerPlugin(env) {
 }
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
+  const env = loadEnv(mode, __dirname, "");
 
   return {
     server: {
