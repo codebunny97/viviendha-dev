@@ -7,11 +7,11 @@ export const projects = [
     slug: "viviendha-twins",
     title: "Viviendha Twins",
     subtitle: "Mukundha & Murari",
-    tagline: "Symmetric Elegance & Harmonious Living in Bowrampet",
+    tagline: "Symmetric Elegance & Harmonious Living in Pride Park, Ameenpur",
     category: "Twin Residential Towers",
     status: "Completed", // "Completed" | "Ongoing" | "Upcoming"
     badge: "Landmark Project",
-    location: "Bowrampet, Hyderabad, Telangana",
+    location: "Pride Park, Ameenpur, Miyapur, Hyderabad, Telangana 502033",
     coordinates: {
       lat: 17.5318209,
       lng: 78.3463257,
@@ -27,10 +27,10 @@ export const projects = [
     heroImage: "/apartment.png",
     coverImage: "/hero.png",
     overview:
-      "Viviendha Twins (Mukundha & Murari) represents our vision of balanced, community-centric living. Set in the tranquil yet rapidly emerging growth corridor of Bowrampet / Bachupally, these twin standalone residential towers offer meticulously planned 2 and 3 BHK homes. Designed with 100% Vastu compliance, exceptional cross-ventilation, and generous setbacks, every home is an enduring sanctuary for modern families.",
+      "Viviendha Twins (Mukundha & Murari) represents our vision of balanced, community-centric living. Located in Pride Park, Ameenpur, Miyapur, Hyderabad (Plus Code: G8JW+QC5), these twin standalone residential towers offer meticulously planned 2 and 3 BHK homes. Designed with 100% Vastu compliance, exceptional cross-ventilation, and generous setbacks, every home is an enduring sanctuary for modern families.",
     keyHighlights: [
       "Twin tower symmetry designed for maximum cross-ventilation and natural daylight",
-      "Prime location just minutes away from Outer Ring Road (ORR Exit 5) and Bachupally Junction",
+      "Prime location in Pride Park, Ameenpur with swift connectivity to Miyapur Metro and Outer Ring Road (ORR)",
       "50+ happy families already residing with active homeowners community",
       "G+5 RCC framed earthquake-resistant structure with premium elevations",
       "100% Vastu-compliant layouts with zero common walls between select units",

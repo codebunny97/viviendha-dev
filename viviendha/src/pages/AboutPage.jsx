@@ -13,7 +13,7 @@ import SEOHead from "../components/SEOHead";
 const STATS = [
   { number: "50+", label: "Happy Families", detail: "Active residents at Viviendha Twins" },
   { number: "2+", label: "Years of Experience", detail: "Dedicated residential focus in Hyderabad" },
-  { number: "1", label: "Project Completed", detail: "Delivered on schedule in Bowrampet" },
+  { number: "1", label: "Project Completed", detail: "Delivered on schedule in Ameenpur, Miyapur" },
   { number: "100%", label: "Legal Transparency", detail: "Clear title deeds & zero surprises" },
 ];
 
@@ -82,7 +82,7 @@ const AboutPage = () => {
                   Viviendha was founded to redefine the residential development experience in Hyderabad. In an industry often clouded by ambiguous timelines and unexpected extras, we set out with a clear charter: build homes where families truly belong, delivered with straightforward communication and high engineering standards.
                 </p>
                 <p>
-                  Our journey began with <strong>Viviendha Twins (Mukundha & Murari)</strong> in Bowrampet—a residential enclave conceived around symmetry, natural ventilation, and peaceful community living. Today, that vision is a vibrant community home to over 50 families.
+                  Our journey began with <strong>Viviendha Twins (Mukundha & Murari)</strong> in Pride Park, Ameenpur (Miyapur)—a residential enclave conceived around symmetry, natural ventilation, and peaceful community living. Today, that vision is a vibrant community home to over 50 families.
                 </p>
                 <p>
                   As Hyderabad continues to grow along the Outer Ring Road and western tech corridors, Viviendha continues to select prime residential pockets that guarantee peaceful living alongside high capital appreciation.

@@ -8,11 +8,31 @@ import {
   ChevronUp,
   Lock,
 } from "lucide-react";
+import { useProjects } from "../context/ProjectsContext";
 
-const GOOGLE_MAPS_LINK =
-  "https://www.google.com/maps/place/Viviendha+Twins+-+Mukundha+%26+Murari/@17.5318209,78.3463257,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb8d006ea9e8a5:0x5b771ac932e578ab!8m2!3d17.5318209!4d78.3463257!16s%2Fg%2F11ycl4g1lp";
+const getProjectBadge = (status) => {
+  const normalized = String(status || "").toLowerCase().trim();
+  if (normalized === "completed" || normalized === "ready") {
+    return {
+      label: "Ready",
+      className: "text-emerald-400 bg-emerald-950/60 border-emerald-800",
+    };
+  }
+  if (normalized === "ongoing") {
+    return {
+      label: "Ongoing",
+      className: "text-amber-300 bg-amber-950/60 border-amber-800",
+    };
+  }
+  return {
+    label: status || "Upcoming",
+    className: "text-sky-300 bg-sky-950/60 border-sky-800",
+  };
+};
 
 const Footer = () => {
+  const { publicProjects } = useProjects();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -31,7 +51,7 @@ const Footer = () => {
                 Ready to find your family's next home?
               </h3>
               <p className="text-sm text-slate-400 mt-1 max-w-xl">
-                Schedule a personalized tour of our completed landmark project in Bowrampet or discuss upcoming residential opportunities.
+                Schedule a personalized tour of our completed landmark project in Hyderabad or discuss upcoming residential opportunities.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-4">
@@ -127,39 +147,30 @@ const Footer = () => {
               Portfolio
             </h4>
             <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link
-                  to="/projects/viviendha-twins"
-                  className="text-slate-400 hover:text-white transition-colors flex items-center justify-between"
-                >
-                  <span>Viviendha Twins</span>
-                  <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800">
-                    Ready
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/projects/viviendha-serene-heights"
-                  className="text-slate-400 hover:text-white transition-colors flex items-center justify-between"
-                >
-                  <span>Serene Heights</span>
-                  <span className="text-[10px] text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800">
-                    Ongoing
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/projects/viviendha-aura"
-                  className="text-slate-400 hover:text-white transition-colors flex items-center justify-between"
-                >
-                  <span>Viviendha Aura</span>
-                  <span className="text-[10px] text-sky-300 bg-sky-950/60 px-2 py-0.5 rounded-full border border-sky-800">
-                    Upcoming
-                  </span>
-                </Link>
-              </li>
+              {publicProjects && publicProjects.length > 0 ? (
+                publicProjects.map((project) => {
+                  const badge = getProjectBadge(project.status);
+                  return (
+                    <li key={project.id || project.slug}>
+                      <Link
+                        to={`/projects/${project.slug || project.id}`}
+                        className="text-slate-400 hover:text-white transition-colors flex items-center justify-between gap-2 group"
+                      >
+                        <span className="truncate group-hover:text-white transition-colors">
+                          {project.title}
+                        </span>
+                        <span
+                          className={`text-[10px] px-2 py-0.5 rounded-full border shrink-0 ${badge.className}`}
+                        >
+                          {badge.label}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })
+              ) : (
+                <li className="text-xs text-slate-500 italic">No published projects</li>
+              )}
             </ul>
           </div>
 
@@ -189,15 +200,12 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2.5 text-slate-400">
                 <MapPin className="w-4 h-4 text-[#3B746A] shrink-0 mt-0.5" />
-                <span>
-                  Bowrampet, Bachupally,
-                  <br />
-                  Hyderabad, Telangana
-                </span>
+                <span>Hyderabad, Telangana</span>
               </li>
             </ul>
           </div>
         </div>
+
 
         {/* Bottom Bar */}
         <div className="mt-14 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">

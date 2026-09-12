@@ -201,7 +201,7 @@ const Navbar = () => {
             className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#1E3A34] text-white px-5 py-3.5 text-sm font-medium shadow-sm hover:bg-[#2D5D54] transition-colors"
           >
             <MapPin className="w-4 h-4" />
-            <span>Visit Our Site (Bowrampet)</span>
+            <span>Visit Our Site (Ameenpur, Miyapur)</span>
           </a>
           <a
             href="tel:+919686696364"

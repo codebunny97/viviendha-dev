@@ -54,7 +54,7 @@ const DEFAULT_FORM_STATE = {
   status: "Completed",
   badge: "Landmark Project",
   isPublished: true,
-  location: "Bowrampet, Hyderabad, Telangana",
+  location: "Pride Park, Ameenpur, Miyapur, Hyderabad, Telangana 502033",
   coordinates: { lat: 17.5318209, lng: 78.3463257 },
   googleMapsUrl: "",
   reraNumber: "",
@@ -405,7 +405,7 @@ const ProjectForm = ({ mode = "create" }) => {
                       type="text"
                       value={formData.tagline}
                       onChange={(e) => handleChange("tagline", e.target.value)}
-                      placeholder="e.g. Symmetric Elegance & Harmonious Living in Bowrampet"
+                      placeholder="e.g. Symmetric Elegance & Harmonious Living in Pride Park, Ameenpur"
                       className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#1E3A34] focus:outline-none"
                     />
                   </div>
@@ -502,7 +502,7 @@ const ProjectForm = ({ mode = "create" }) => {
                       type="text"
                       value={formData.location}
                       onChange={(e) => handleChange("location", e.target.value)}
-                      placeholder="e.g. Bowrampet, Hyderabad, Telangana"
+                      placeholder="e.g. Pride Park, Ameenpur, Miyapur, Hyderabad, Telangana 502033"
                       className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#1E3A34] focus:outline-none"
                     />
                   </div>

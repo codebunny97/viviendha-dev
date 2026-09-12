@@ -46,7 +46,7 @@ const ProjectsPage = () => {
     <>
       <SEOHead
         title="Residential Projects in Hyderabad"
-        description="Explore Viviendha's residential communities including completed Viviendha Twins in Bowrampet and upcoming high-rise ventures."
+        description="Explore Viviendha's residential communities including completed Viviendha Twins in Pride Park, Ameenpur (Miyapur) and upcoming high-rise ventures."
       />
 
       {/* Hero Header */}

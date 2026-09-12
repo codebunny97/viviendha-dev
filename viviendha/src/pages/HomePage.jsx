@@ -18,7 +18,7 @@ const ROTATING_WORDS = ["Dream.", "Family.", "Future."];
 const METRICS = [
   { value: "50+", label: "Happy Resident Families", sub: "Thriving at Viviendha Twins" },
   { value: "2+", label: "Years of Craftsmanship", sub: "Delivering modern quality" },
-  { value: "1", label: "Landmark Completed", sub: "Bowrampet Twin Towers" },
+  { value: "1", label: "Landmark Completed", sub: "Pride Park Twin Towers" },
   { value: "100%", label: "Legal Transparency", sub: "Clear titles & honest dealings" },
 ];
 
@@ -27,7 +27,7 @@ const WHY_CHOOSE = [
     icon: MapPin,
     title: "Strategic Growth Locations",
     description:
-      "Carefully chosen hubs like Bowrampet, Bachupally, and Tellapur with rapid ORR connectivity, top international schools, and seamless commutes to the IT corridors.",
+      "Carefully chosen hubs like Ameenpur, Miyapur, and Tellapur with rapid ORR connectivity, top international schools, and seamless commutes to the IT corridors.",
   },
   {
     icon: Compass,
@@ -144,7 +144,7 @@ const HomePage = () => {
                   <h3 className="text-2xl font-bold tracking-tight">Viviendha Twins</h3>
                   <p className="text-xs sm:text-sm text-slate-300 flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-[#3B746A]" />
-                    <span>Bowrampet / Bachupally, Hyderabad</span>
+                    <span>Pride Park, Ameenpur, Miyapur, Hyderabad</span>
                   </p>
                   <div className="pt-3 flex items-center justify-between">
                     <span className="text-xs text-slate-300 font-medium">50+ Resident Families</span>

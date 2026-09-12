@@ -569,24 +569,24 @@ const ProjectDetailPage = () => {
                 Location Connectivity
               </span>
               <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-                Prime Bowrampet Location
+                Prime {project.location ? project.location.split(",")[0] : "Strategic"} Location
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Enjoy serene, unpolluted surroundings with rapid connectivity to ORR Exit 5, Bachupally crossroads, Miyapur Metro, and top institutions like Silver Oaks, Oakridge, and VNR VJIET.
+                Enjoy serene, well-connected surroundings in {project.location ? project.location.split(",")[0] : "Hyderabad"} with rapid connectivity to Outer Ring Road (ORR), Miyapur Metro, reputed schools, and prime IT corridors.
               </p>
 
               <div className="pt-2 space-y-2 text-xs text-slate-700">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#2D5D54]" />
-                  <span>5 mins to Nehru Outer Ring Road (ORR)</span>
+                  <span>Rapid connectivity to Nehru Outer Ring Road (ORR)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#2D5D54]" />
-                  <span>10 mins to Bachupally Educational Hub</span>
+                  <span>10 mins to Miyapur Metro &amp; Educational Hubs</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#2D5D54]" />
-                  <span>25 mins to Gachibowli &amp; Hitec City</span>
+                  <span>25 mins to Gachibowli &amp; Financial District / Hitec City</span>
                 </div>
               </div>
 

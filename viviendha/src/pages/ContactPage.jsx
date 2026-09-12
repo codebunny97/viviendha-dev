@@ -20,7 +20,7 @@ const ContactPage = () => {
     fullName: "",
     email: "",
     phone: "",
-    project: "Viviendha Twins (Bowrampet)",
+    project: "Viviendha Twins (Pride Park, Ameenpur)",
     message: "",
   });
 
@@ -111,7 +111,7 @@ const ContactPage = () => {
       fullName: "",
       email: "",
       phone: "",
-      project: "Viviendha Twins (Bowrampet)",
+      project: "Viviendha Twins (Pride Park, Ameenpur)",
       message: "",
     });
     setStatus("idle");
@@ -122,7 +122,7 @@ const ContactPage = () => {
     <>
       <SEOHead
         title="Contact Viviendha Developers | Hyderabad"
-        description="Get in touch with Viviendha Developers. Schedule site appointments, enquire about apartments, or visit our Bowrampet project in Hyderabad."
+        description="Get in touch with Viviendha Developers. Schedule site appointments, enquire about apartments, or visit our Ameenpur, Miyapur project in Hyderabad."
       />
 
       {/* Hero Header */}
@@ -186,7 +186,11 @@ const ContactPage = () => {
               <p className="text-xs text-slate-500">
                 Viviendha Twins - Mukundha &amp; Murari,
                 <br />
-                Bowrampet, Bachupally, Hyderabad
+                Pride Park, Ameenpur, Miyapur,
+                <br />
+                Hyderabad, Telangana 502033
+                <br />
+                <span className="text-[11px] text-slate-400">Plus Code: G8JW+QC5</span>
               </p>
               <a
                 href={GOOGLE_MAPS_LINK}
@@ -327,8 +331,8 @@ const ContactPage = () => {
                       onChange={(e) => setForm({ ...form, project: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:bg-white focus:border-[#2D5D54] focus:ring-2 focus:ring-[#2D5D54]/20 outline-none transition-all"
                     >
-                      <option value="Viviendha Twins (Bowrampet)">
-                        Viviendha Twins (Bowrampet - Ready to Move)
+                      <option value="Viviendha Twins (Pride Park, Ameenpur)">
+                        Viviendha Twins (Pride Park, Ameenpur - Ready to Move)
                       </option>
                       <option value="Viviendha Serene Heights (Tellapur)">
                         Viviendha Serene Heights (Tellapur - Ongoing High-Rise)
@@ -394,7 +398,7 @@ const ContactPage = () => {
                   Visit Viviendha Twins
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Our on-site relationship managers are available all 7 days of the week to show you the completed apartments, clubhouse, and terrace facilities.
+                  Located in Pride Park, Ameenpur, Miyapur (Plus Code: G8JW+QC5). Our on-site relationship managers are available all 7 days of the week to show you the completed apartments, clubhouse, and terrace facilities.
                 </p>
 
                 <div className="pt-2">
